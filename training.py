@@ -5,7 +5,7 @@ def likelihood(list):
 	for x in list:
 		empirical_likelihood = add(empirical_likelihood, x)
 
-	return empirical_likelihood/list.len()
+	return empirical_likelihood/len(list)
 
 
 def smoothed_likelihood(list, k):	
@@ -13,7 +13,7 @@ def smoothed_likelihood(list, k):
 	for x in list:
 		empirical_likelihood = add(empirical_likelihood, x)
 
-	return (empirical_likelihood+k)/(list.len() + 2*k)
+	return (empirical_likelihood+k)/(len(list) + 2*k)
 
 
 def main():
