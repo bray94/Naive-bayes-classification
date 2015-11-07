@@ -13,4 +13,13 @@ def readTrainingLabels():
 
 	file.close()
 
-	return list
+	return [float(x)/counter for x in list]
+
+
+def main():
+	prior = readTrainingLabels()
+
+
+
+if __name__ == '__main__':
+	main()
