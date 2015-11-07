@@ -18,7 +18,6 @@ def smoothed_likelihood(list, k):
 
 def main():
 	print "Hello!"
-	print "I want to create a new branch"
 
 if __name__ == '__main__':
 	main()
