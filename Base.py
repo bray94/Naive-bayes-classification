@@ -1,3 +1,5 @@
+
+
 def readTrainingLabels():
 	file = open("digitdata/traininglabels" , "r")
 
@@ -11,4 +13,4 @@ def readTrainingLabels():
 
 	file.close()
 
-	print(list)
+	return list
