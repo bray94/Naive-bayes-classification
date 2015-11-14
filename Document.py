@@ -1,7 +1,7 @@
 class Document(object):
 	"""docstring for Document"""
 
-	def __init__(self, labelvalue = 2, dictvalue ):
+	def __init__(self, dictvalue, labelvalue = 2):
 		self.label = labelvalue
 		self.dictionary = dictvalue
 

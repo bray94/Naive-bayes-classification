@@ -196,7 +196,7 @@ def readTrainingEmails():
 			a,b = linelist[x].split(":")
 			dictemails[a] = int(b) 
 
-		emails.append(Document(labelvalue = int(linelist[0]), dictemails))
+		emails.append(Document(dictemails,labelvalue = int(linelist[0])))
 
 	file.close()
 
@@ -247,21 +247,21 @@ def part2():
 	bernouilli(emails_classes[0])
 	bernouilli(emails_classes[1])
 
-	# file = open("multinomial_regular.txt", "w")
-	# print>>file, emails_classes[0].m_likelihood_reg
-	# file.close()
+	file = open("multinomial_regular.txt", "w")
+	print>>file, emails_classes[0].m_likelihood
+	file.close()
 
-	# file = open("multinomial_spam.txt", "w")
-	# print>>file, emails_classes[1].m_likelihood_spam
-	# file.close()
+	file = open("multinomial_spam.txt", "w")
+	print>>file, emails_classes[1].m_likelihood
+	file.close()
 
-	# file = open("bernouilli_regular.txt", "w")
-	# print>>file, emails_classes[0].b_likelihood_reg
-	# file.close()
+	file = open("bernouilli_regular.txt", "w")
+	print>>file, emails_classes[0].b_likelihood
+	file.close()
 
-	# file = open("bernouilli_spam.txt", "w")
-	# print>>file, emails_classes[1].b_likelihood_spam
-	# file.close()
+	file = open("bernouilli_spam.txt", "w")
+	print>>file, emails_classes[1].b_likelihood
+	file.close()
 
 	actual_labels, testing_emails = readTestingEmails()
 
