@@ -5,7 +5,6 @@ from testing import *
 
 classes = (10)
 
-
 def readTrainingLabels():
 	# Open The File
 	file = open("digitdata/traininglabels.txt" , "r")
@@ -121,12 +120,15 @@ def main():
 	for x in xrange(0,len(imagesList)):
 		classesList[labels[x]].addTrainingData(imagesList[x])
 
-	for i in xrange(0,1):
+
+
+	for i in xrange(1,2):
 		for x in xrange(0,10):
 			classesList[x].empirical_likelihood = smoothed_likelihood(classesList[x].training_data,i)
 
 		testingImagesList = readTestingImages()
 		hypotheticalLabels = []
+		confusionMatrix = zeros((10,10))
 
 		for x in xrange(0, len(testingImagesList)):
 			hypotheticalLabels.append(numClassifier(classesList,testingImagesList[x]))
@@ -135,7 +137,7 @@ def main():
 		for element in hypotheticalLabels:
 			hypotheticalClasses[element]+=1
 
-		print hypotheticalClasses
+		#print hypotheticalClasses
 		
 		testClasses, testLabels = readTestingLabels()
 
@@ -143,16 +145,36 @@ def main():
 
 		error_by_class = []
 		for x in xrange(0,10):
-			error_by_class.append(abs(float(hypotheticalClasses[x]-testClasses[x])/testClasses[x]))
+			error_by_class.append(100 - abs(float(hypotheticalClasses[x]-testClasses[x])*100/testClasses[x]))
 
+		# Find the confusion matrix
+		for x in xrange(0,len(testLabels)):
+			confusionMatrix[testLabels[x]][hypotheticalLabels[x]] += 1
 
+		for x in xrange(0,10):
+			for y in xrange(0,10):
+				confusionMatrix[x][y] = confusionMatrix[x][y] * 100 / testClasses[x]
 
-		error_value = float(count_nonzero(error))/1000
+		error_value = float(count_nonzero(error))/10
+		file = open("sample.txt" , "w")
 
-	
-		print "This is the priors: ",labelsList, " for a smoothing of: ", i
-		print "This is the actual stats: ",testClasses, " for a smoothing of: ", i
-		print "This is the hypothetical stats: ",hypotheticalClasses, " for a smoothing of: ", i
+		for i in xrange(0,10):
+			print "Digit Class: ", i
+			print "Highest Posterior", classesList[i].highestPosterior
+			print classesList[i].highPostImage
+			print "Lowest Posterior", classesList[i].lowestPosterior
+			print classesList[i].lowPostImage
+		#print "The error is ", error_value
+		#print "Success Rate: ", int(100-error_value), " for a value of k: ", i
+
+		#print "Classification Rate: ", error_by_class
+
+		#print confusionMatrix
+		#print "This is the priors: ",labelsList, " for a smoothing of: ", i
+		#print "This is the actual stats: ",testClasses, " for a smoothing of: ", i
+		#print "This is the hypothetical stats: ",hypotheticalClasses, " for a smoothing of: ", i
+		#print "Error By Digit: ", error_by_class
+		#print "This is the likelihood: ", classesList[x].empirical_likelihood
 
 
 if __name__ == '__main__':
