@@ -39,12 +39,46 @@ def numClassifier(classList, testData):
 
 	assignedClass = list.index(max(list))
 
-	if list[assignedClass] > classList[assignedClass].highestPosterior:
-		classList[assignedClass].highestPosterior = list[assignedClass]
-		classList[assignedClass].highPostImage = testData
+	return assignedClass
 
-	if list[assignedClass] < classList[assignedClass].lowestPosterior:
-		classList[assignedClass].lowestPosterior = list[assignedClass]
-		classList[assignedClass].lowPostImage = testData
+"""
+This function computes the mapEstimate (posterior)
+for a testimage and a potential class
+testData = the test image to be classified
+possibleNumber = numberClass object to which
+		   this testimage might belong
+"""
+def mapEstimateFace(possibleNumber, testData):
+
+	prior = possibleNumber.prior
+
+	computedLikelihoods = possibleNumber.empirical_likelihood
+
+	total_likelihood = 0
+
+	for x in xrange(0,70):
+		for y in xrange(0,60):
+			if testData[x][y] == 0:
+				total_likelihood += math.log(1 - computedLikelihoods[x][y])
+			else:
+				total_likelihood += math.log(computedLikelihoods[x][y])
+
+	print "Likelihoods: ", total_likelihood
+
+	return math.log(prior) + total_likelihood
+
+"""
+This function assignes a testimage to the class
+with the highest posterior
+classList = an array of numberClass objects
+testData = the input test image
+"""
+def numClassifierFace(classList, testData):
+	list = [0, 0]
+
+	for x in xrange(0,2):
+		list[x] = mapEstimateFace(classList[x], testData)
+
+	assignedClass = list.index(max(list))
 
 	return assignedClass
