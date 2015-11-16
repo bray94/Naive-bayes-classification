@@ -52,6 +52,10 @@ class numberClassFace(object):
 		self.priot = 0.1
 		self.empirical_likelihood = zeros((70,60))
 		self.training_data = []
+		self.highestPosterior = -10000
+		self.lowestPosterior = 1000
+		self.highPostImage = []
+		self.lowPostImage = []
 
 	def addTrainingData(self, training_value):
 		self.training_data.append(training_value)
